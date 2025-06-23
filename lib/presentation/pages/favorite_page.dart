@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:work_assistent/presentation/pages/favorite_page.dart';
-import 'package:work_assistent/presentation/pages/filter_page.dart';
 import 'package:work_assistent/presentation/pages/profile_page.dart';
 import 'package:work_assistent/presentation/pages/view_history_page.dart';
+import 'package:work_assistent/presentation/pages/work_page.dart';
 import 'package:work_assistent/presentation/widgets/advertisement.dart';
 import 'package:work_assistent/presentation/widgets/bottom_buttons.dart';
-import 'package:work_assistent/presentation/widgets/filter_button.dart';
-import 'package:work_assistent/presentation/widgets/searchbar.dart';
 
-class WorkPage extends StatelessWidget {
-  const WorkPage({super.key});
+class FavoritePage extends StatelessWidget {
+  const FavoritePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +14,7 @@ class WorkPage extends StatelessWidget {
       backgroundColor: Color(0xFF191A1F),
       appBar: AppBar(
         title: const Text(
-          "Работа",
+          "Избранное",
           style: TextStyle(
             fontFamily: "Inter",
             fontSize: 24,
@@ -41,32 +38,6 @@ class WorkPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              Row(
-                children: [
-                  MySearchBar(onChanged: (value) {}),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: FilterButton(onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FilterPage(),
-                        ),
-                      );
-                    }),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Advertisement(
-                discription:
-                    "Срочно нужно сделать карточки маркетплейсов для вб",
-                cost: "500 р. за штуку",
-                time: "Сегодня",
-                feedback: '4.5',
-                location: "ул.Ямашева 12",
-                hasNumber: true,
-              ),
               SizedBox(height: 20),
               Advertisement(
                 discription:
@@ -76,18 +47,6 @@ class WorkPage extends StatelessWidget {
                 feedback: '5',
                 location: "ул.Чуйкова 35",
                 hasNumber: true,
-
-              ),
-              SizedBox(height: 20),
-              Advertisement(
-                discription:
-                    "Нужна крутая презентация для товара на вб! Быстро!",
-                cost: "5000",
-                time: "4 часа",
-                feedback: '5',
-                location: "ул.Чуйкова 35",
-                hasNumber: true,
-
               ),
             ],
           ),
@@ -96,12 +55,12 @@ class WorkPage extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
         child: BottomButtons(
-          currentIndex: 0,
+          currentIndex: 1,
           onTabSelected: (index) {
-            if (index == 1) {
+            if (index == 0) {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => FavoritePage()),
+                MaterialPageRoute(builder: (context) => WorkPage()),
               );
             }
             if (index == 2) {

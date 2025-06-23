@@ -6,6 +6,8 @@ class Advertisement extends StatefulWidget {
   final String cost;
   final String time;
   final String feedback;
+  final String location;
+  final bool hasNumber;
 
   const Advertisement({
     Key? key,
@@ -13,6 +15,8 @@ class Advertisement extends StatefulWidget {
     required this.cost,
     required this.time,
     required this.feedback,
+    required this.location,
+    required this.hasNumber,
   }) : super(key: key);
 
   @override
@@ -20,19 +24,25 @@ class Advertisement extends StatefulWidget {
 }
 
 class _AdvertisementState extends State<Advertisement> {
+  bool _isLiked = false;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(
-          height: 150,
-          width: 380,
+          height: 163,
+          width: double.infinity,
           child: Card(
             color: Color(0xFF35383F),
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 8, right: 10),
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                    top: 8,
+                    right: 10,
+                    bottom: 11,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -107,6 +117,34 @@ class _AdvertisementState extends State<Advertisement> {
                           ),
                         ],
                       ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: SvgPicture.asset(
+                              'assets/icons/location.svg',
+                              width: 20,
+                              height: 20,
+                              color: Color(0xFFFFFFFF),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                              widget.location,
+                              style: TextStyle(
+                                color: Color(0xFFFFFFFF),
+                                fontSize: 16,
+                                fontFamily: "Inter",
+                                fontWeight: FontWeight.w100,
+                                letterSpacing: 0,
+                                height: 1,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -114,18 +152,23 @@ class _AdvertisementState extends State<Advertisement> {
                   top: 4,
                   right: 4,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        _isLiked = !_isLiked;
+                      });
+                    },
                     icon: SvgPicture.asset(
-                      'assets/icons/favorite_false.svg',
+                      _isLiked
+                          ? 'assets/icons/favorite_true.svg'
+                          : 'assets/icons/favorite_false.svg',
                       width: 20,
                       height: 20,
-                      color: Color(0xFFFFFFFF),
                     ),
                   ),
                 ),
                 Positioned(
-                  top: 85,
-                  right: 4,
+                  bottom: 10,
+                  right: 10,
                   child: Row(
                     children: [
                       IconButton(
@@ -150,11 +193,7 @@ class _AdvertisementState extends State<Advertisement> {
                         padding: EdgeInsets.only(left: 6),
                         child: IconButton(
                           onPressed: () {},
-                          icon: SvgPicture.asset(
-                            'assets/icons/dinar.svg',
-                            width: 40,
-                            height: 40,
-                          ),
+                          icon: Image.asset("assets/images/ronaldo.png", height: 40, width: 40),
                         ),
                       ),
                     ],
@@ -164,61 +203,85 @@ class _AdvertisementState extends State<Advertisement> {
             ),
           ),
         ),
-        SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-              height: 40,
-              width: 170,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF191A1F),
-                  side: BorderSide(color: Color(0XFF6849FF), width: 1.5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+        SizedBox(height: 10),
+        widget.hasNumber
+            ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                  height: 40,
+                  width: 170,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF191A1F),
+                      side: BorderSide(color: Color(0XFF6849FF), width: 1.5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: Text(
+                      'Позвонить',
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontFamily: "Inter",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ),
-                child: Text(
-                  'Позвонить',
-                  style: TextStyle(
-                    color: Color(0xFFFFFFFF),
-                    fontFamily: "Inter",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
 
-            SizedBox(
-              height: 40,
-              width: 170,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF6849FF),
-                  side: BorderSide(color: Color(0XFF6849FF), width: 1.5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                SizedBox(
+                  height: 40,
+                  width: 170,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF6849FF),
+                      side: BorderSide(color: Color(0XFF6849FF), width: 1.5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: Text(
+                      'Подробнее',
+                      style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontFamily: "Inter",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ),
-                child: Text(
-                  'Отликнуться',
-                  style: TextStyle(
-                    color: Color(0xFFFFFFFF),
-                    fontFamily: "Inter",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+              ],
+            )
+            : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 0),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF6849FF),
+                    side: BorderSide(color: Color(0XFF6849FF), width: 1.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  child: Text(
+                    'Подробнее',
+                    style: TextStyle(
+                      color: Color(0xFFFFFFFF),
+                      fontFamily: "Inter",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
       ],
     );
   }

@@ -20,8 +20,16 @@ class NoticePage extends StatelessWidget {
             color: Color(0xFFFFFFFF),
           ),
         ),
-        backgroundColor: Color(0xFF191A1F),
+        backgroundColor: const Color(0xFF191A1F), 
         centerTitle: true,
+        elevation: 0, 
+        scrolledUnderElevation: 0, 
+        surfaceTintColor: Colors.transparent, 
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF191A1F), 
+          ),
+        ),
       ),
 
       body: Padding(
