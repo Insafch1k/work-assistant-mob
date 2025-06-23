@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:work_assistent/presentation/pages/my_advertisement_page.dart';
-import 'package:work_assistent/presentation/pages/new_advertisement_page.dart';
-import 'package:work_assistent/presentation/pages/work_page.dart';
 
 void main() {
   runApp(const MyApp());
