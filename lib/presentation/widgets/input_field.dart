@@ -6,12 +6,8 @@ class InputField extends StatefulWidget {
   final TextEditingController? controller;
   final String? hintText;
 
-  const InputField({
-    Key? key,
-    this.onChanged,
-    this.controller,
-    this.hintText,
-  }) : super(key: key);
+  const InputField({Key? key, this.onChanged, this.controller, this.hintText})
+    : super(key: key);
 
   @override
   State<InputField> createState() => _InputFieldState();
@@ -35,6 +31,7 @@ class _InputFieldState extends State<InputField> {
           color: Color(0xFFFFFFFF),
         ),
         decoration: InputDecoration(
+          isDense: true,
           hintText: widget.hintText,
           hintStyle: TextStyle(
             fontFamily: 'Inter',
@@ -59,8 +56,7 @@ class _InputFieldState extends State<InputField> {
           ),
           filled: true,
           fillColor: Color(0xFF35383F),
-          contentPadding:
-              EdgeInsets.only(top: 11, bottom: 10.0, left: 42.0, right: 10.0),
+          contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         ),
       ),
     );

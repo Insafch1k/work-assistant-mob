@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:work_assistent/presentation/pages/reduct_advertisement_page.dart';
 
 class EmployerAdvertisement extends StatefulWidget {
   final String discription;
@@ -141,7 +142,13 @@ class _EmployerAdvertisementState extends State<EmployerAdvertisement> {
                       !_isUrgent
                           ? IconButton(
                             onPressed: () {
-                              // переход на редактирование
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => ReductAdvertisementPage(),
+                                ),
+                              );
                             },
                             icon: SvgPicture.asset(
                               'assets/icons/reduct.svg',
@@ -154,7 +161,14 @@ class _EmployerAdvertisementState extends State<EmployerAdvertisement> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  // переход на редактирование
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) =>
+                                              ReductAdvertisementPage(),
+                                    ),
+                                  );
                                 },
                                 icon: SvgPicture.asset(
                                   'assets/icons/reduct.svg',
