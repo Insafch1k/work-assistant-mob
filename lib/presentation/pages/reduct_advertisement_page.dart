@@ -6,14 +6,14 @@ import 'package:work_assistent/presentation/widgets/employer_bottom_buttons.dart
 import 'package:work_assistent/presentation/widgets/input_field.dart';
 import 'package:work_assistent/presentation/widgets/text_field.dart';
 
-class NewAdvertisementPage extends StatefulWidget {
-  const NewAdvertisementPage({super.key});
+class ReductAdvertisementPage extends StatefulWidget {
+  const ReductAdvertisementPage({super.key});
 
   @override
-  State<NewAdvertisementPage> createState() => _NewAdvertisementPageState();
+  State<ReductAdvertisementPage> createState() => _ReductAdvertisementPageState();
 }
 
-class _NewAdvertisementPageState extends State<NewAdvertisementPage> {
+class _ReductAdvertisementPageState extends State<ReductAdvertisementPage> {
   bool _isSwitched = false;
   int _selectedIndex = 0;
   @override
@@ -22,7 +22,7 @@ class _NewAdvertisementPageState extends State<NewAdvertisementPage> {
       backgroundColor: const Color(0xFF191A1F),
       appBar: AppBar(
         title: const Text(
-          "Новое объявление",
+          "Редактирование",
           style: TextStyle(
             fontFamily: "Inter",
             fontSize: 24,
@@ -30,13 +30,15 @@ class _NewAdvertisementPageState extends State<NewAdvertisementPage> {
             color: Color(0xFFFFFFFF),
           ),
         ),
-        backgroundColor: const Color(0xFF191A1F),
+        backgroundColor: const Color(0xFF191A1F), 
         centerTitle: true,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        surfaceTintColor: Colors.transparent,
+        elevation: 0, 
+        scrolledUnderElevation: 0, 
+        surfaceTintColor: Colors.transparent, 
         flexibleSpace: Container(
-          decoration: BoxDecoration(color: const Color(0xFF191A1F)),
+          decoration: BoxDecoration(
+            color: const Color(0xFF191A1F), 
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -61,9 +63,7 @@ class _NewAdvertisementPageState extends State<NewAdvertisementPage> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
                 width: double.infinity,
-                child: CustomTextField(
-                  hintText: "Напишите название подработки",
-                ),
+                child: CustomTextField(hintText: "Напишите название подработки"),
               ),
             ),
             SizedBox(height: 10),
@@ -159,9 +159,9 @@ class _NewAdvertisementPageState extends State<NewAdvertisementPage> {
                     'assets/icons/lightning.svg',
                     width: 18,
                     height: 18,
-                    color: _isSwitched 
-                    ? Color(0xFFFFF024) 
-                    : Color(0xFF71747B),
+                    color: _isSwitched
+                    ?Color(0xFFFFF024)
+                    :Color(0xFF71747B),
                   ),
                   SizedBox(width: 5),
                   Text(
@@ -302,16 +302,14 @@ class _NewAdvertisementPageState extends State<NewAdvertisementPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => MyAdvertisementPage(),
-                      ),
+                      MaterialPageRoute(builder: (context) => MyAdvertisementPage()),
                     );
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Разместить объявление',
+                        'Сохранить изменения',
                         style: TextStyle(
                           fontFamily: "Inter",
                           fontSize: 16,
@@ -338,7 +336,7 @@ class _NewAdvertisementPageState extends State<NewAdvertisementPage> {
                 MaterialPageRoute(builder: (context) => EmployerWorkPage()),
               );
             }
-            if (index == 1) {
+            if(index == 1){
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => MyAdvertisementPage()),

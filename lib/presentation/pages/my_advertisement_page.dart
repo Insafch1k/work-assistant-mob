@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:work_assistent/presentation/pages/employer_work_page.dart';
 import 'package:work_assistent/presentation/pages/new_advertisement_page.dart';
 import 'package:work_assistent/presentation/widgets/employer_advertisement.dart';
 import 'package:work_assistent/presentation/widgets/employer_bottom_buttons.dart';
@@ -112,7 +113,10 @@ class MyAdvertisementPage extends StatelessWidget {
           currentIndex: 1,
           onTabSelected: (index) {
             if (index == 0) {
-              // переход на страницу работ(объявлений)
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => EmployerWorkPage()),
+              );
             }
             if (index == 2) {
               // переход на юзера(работорадетль)
