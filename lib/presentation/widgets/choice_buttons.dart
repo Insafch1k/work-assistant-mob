@@ -172,29 +172,29 @@ class _ChoiceButtonsState extends State<ChoiceButtons>
                       ),
                     ),
                     SizedBox(height: 10),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF6849FF),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          alignment: Alignment.center,
-                        ),
-                        onPressed: () {},
-                        child: Text(
-                          "Авторизоваться",
-                          style: TextStyle(
-                            fontFamily: "Inter",
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFFFFFFFF),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // SizedBox(
+                    //   width: MediaQuery.of(context).size.width,
+                    //   height: 60,
+                    //   child: ElevatedButton(
+                    //     style: ElevatedButton.styleFrom(
+                    //       backgroundColor: const Color(0xFF6849FF),
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(15),
+                    //       ),
+                    //       alignment: Alignment.center,
+                    //     ),
+                    //     onPressed: () {},
+                    //     child: Text(
+                    //       "Авторизоваться",
+                    //       style: TextStyle(
+                    //         fontFamily: "Inter",
+                    //         fontSize: 16,
+                    //         fontWeight: FontWeight.w500,
+                    //         color: Color(0xFFFFFFFF),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:work_assistent/presentation/pages/work_page.dart';
-import 'package:work_assistent/presentation/widgets/bottom_buttons.dart';
+import 'package:work_assistent_mob/presentation/pages/work_page.dart';
+import 'package:work_assistent_mob/presentation/widgets/bottom_buttons.dart';
 
 class NoticePage extends StatelessWidget {
   const NoticePage({super.key});

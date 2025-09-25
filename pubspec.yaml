@@ -1,4 +1,4 @@
-name: work_assistent
+name: work_assistent_mob
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -28,7 +28,12 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  flutter_secure_storage: ^9.2.4
+  get_it: ^7.2.0
+  http: ^1.1.0
   flutter_svg: ^1.0.3
+  provider: ^6.0.5
+  url_launcher: ^6.1.11
   flutter:
     sdk: flutter
 
@@ -36,6 +41,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:

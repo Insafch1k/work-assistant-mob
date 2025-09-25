@@ -1,0 +1,18 @@
+[33m7f78f6c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33m7f78f6c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{1}: checkout: moving from main to master
+[33ma5a8895[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{2}: commit: Добавлен дизайн
+[33m57d0cce[m HEAD@{3}: commit (merge): Принимаю удалённую версию README.md
+[33m2a1e4ae[m HEAD@{4}: commit: виджеты
+[33mf629e34[m HEAD@{5}: commit: экраны
+[33m75baa03[m HEAD@{6}: Branch: renamed refs/heads/main to refs/heads/main
+[33m75baa03[m HEAD@{8}: commit: First Commit
+[33me4c57c2[m[33m ([m[1;32mfeature/my-changes[m[33m)[m HEAD@{9}: checkout: moving from master to main
+[33m7f78f6c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{10}: checkout: moving from feature/initial-setup to master
+[33mceb3b0f[m[33m ([m[1;32mfeature/initial-setup[m[33m)[m HEAD@{11}: commit: Первый коммит
+[33m5c1afbe[m[33m ([m[1;31morigin/feature/initial-setup[m[33m)[m HEAD@{12}: commit: Первая загрузка проекта
+[33me4c57c2[m[33m ([m[1;32mfeature/my-changes[m[33m)[m HEAD@{13}: checkout: moving from main to feature/initial-setup
+[33me4c57c2[m[33m ([m[1;32mfeature/my-changes[m[33m)[m HEAD@{14}: Branch: renamed refs/heads/feature/part_of_ui to refs/heads/main
+[33me4c57c2[m[33m ([m[1;32mfeature/my-changes[m[33m)[m HEAD@{16}: checkout: moving from feature/my-changes to feature/part_of_ui
+[33me4c57c2[m[33m ([m[1;32mfeature/my-changes[m[33m)[m HEAD@{17}: commit: first commit
+[33m3db2432[m HEAD@{18}: checkout: moving from main to feature/my-changes
+[33m3db2432[m HEAD@{19}: commit (initial): new

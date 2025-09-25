@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:work_assistent/presentation/pages/create_resume_page.dart';
-import 'package:work_assistent/presentation/pages/favorite_page.dart';
-import 'package:work_assistent/presentation/pages/recreate_resume_page.dart';
-import 'package:work_assistent/presentation/pages/view_history_page.dart';
-import 'package:work_assistent/presentation/pages/work_page.dart';
-import 'package:work_assistent/presentation/widgets/bottom_buttons.dart';
+import 'package:provider/provider.dart';
+import 'package:work_assistent_mob/presentation/pages/create_resume_page.dart';
+import 'package:work_assistent_mob/presentation/pages/favorite_page.dart';
+import 'package:work_assistent_mob/presentation/pages/recreate_resume_page.dart';
+import 'package:work_assistent_mob/presentation/pages/view_history_page.dart';
+import 'package:work_assistent_mob/presentation/pages/work_page.dart';
+import 'package:work_assistent_mob/presentation/providers/resume_provider.dart';
+import 'package:work_assistent_mob/presentation/widgets/bottom_buttons.dart';
+import 'package:work_assistent_mob/presentation/widgets/skills.dart';
 
 class ProfilePage extends StatefulWidget {
-
   const ProfilePage({super.key});
 
   @override
@@ -16,16 +18,23 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  bool hasResume = true;
-
-  void handleHasResume(bool value) {
-    setState(() {
-      hasResume = value;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final provider = Provider.of<ResumeProvider>(context, listen: false);
+      await provider.fetchResumes();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final resumeProvider = Provider.of<ResumeProvider>(context);
+    final currentResume = resumeProvider.currentResume;
+    final hasResume = resumeProvider.hasResume;
+
+    print('Has resume: $hasResume');
+
     return Scaffold(
       backgroundColor: const Color(0xFF191A1F),
       appBar: AppBar(
@@ -38,15 +47,13 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Color(0xFFFFFFFF),
           ),
         ),
-        backgroundColor: const Color(0xFF191A1F), 
+        backgroundColor: const Color(0xFF191A1F),
         centerTitle: true,
-        elevation: 0, 
-        scrolledUnderElevation: 0, 
-        surfaceTintColor: Colors.transparent, 
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
-            color: const Color(0xFF191A1F), 
-          ),
+          decoration: BoxDecoration(color: const Color(0xFF191A1F)),
         ),
       ),
       body: SingleChildScrollView(
@@ -58,85 +65,22 @@ class _ProfilePageState extends State<ProfilePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(width: 20),
-                  Image.asset("assets/images/ali.png", height: 60, width: 60),
+                  Image.asset(
+                    "assets/images/ali.png",
+                    height: 60,
+                    width: 60,
+                    color: Color(0xFFFFFFFF),
+                  ),
                   const SizedBox(width: 10),
-                  const Text(
-                    "Али",
-                    style: TextStyle(
+                  Text(
+                    'Хардкод',
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
                       color: Color(0xFFFFFFFF),
                     ),
                   ),
                 ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 169,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF35383F),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Контакты:",
-                        style: TextStyle(
-                          fontFamily: "Inter",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFFFFFFFF),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        "+7 987 187 8633",
-                        style: TextStyle(
-                          fontFamily: "Inter",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFFFFFFFF),
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      const Text(
-                        "Номер телефона",
-                        style: TextStyle(
-                          fontFamily: "Inter",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF71747B),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        "@ali_gurbansahedov",
-                        style: TextStyle(
-                          fontFamily: "Inter",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFFFFFFFF),
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      const Text(
-                        "Имя пользователя",
-                        style: TextStyle(
-                          fontFamily: "Inter",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF71747B),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -161,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CreateResumePage(hasResume: false, onhasResume: handleHasResume,),
+                          builder: (context) => CreateResumePage(),
                         ),
                       );
                     },
@@ -200,12 +144,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         color: const Color(0xFF35383F),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(10),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "Резюме:",
                               style: TextStyle(
                                 fontFamily: "Inter",
@@ -214,8 +158,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: Color(0xFFFFFFFF),
                               ),
                             ),
-                            SizedBox(height: 20),
-                            Text(
+                            const SizedBox(height: 20),
+                            const Text(
                               "Должность",
                               style: TextStyle(
                                 fontFamily: "Inter",
@@ -224,18 +168,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: Color(0xFF71747B),
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Text(
-                              "Веб-Дизайнер",
-                              style: TextStyle(
+                              currentResume?.job_title ?? "",
+                              style: const TextStyle(
                                 fontFamily: "Inter",
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
                                 color: Color(0xFFFFFFFF),
                               ),
                             ),
-                            SizedBox(height: 20),
-                            Text(
+                            const SizedBox(height: 20),
+                            const Text(
                               "Образование",
                               style: TextStyle(
                                 fontFamily: "Inter",
@@ -244,18 +188,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: Color(0xFF71747B),
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Text(
-                              "Казанский национальный исследовательский технологический университет, 2025 г.",
-                              style: TextStyle(
+                              currentResume?.education ?? " ",
+                              style: const TextStyle(
                                 fontFamily: "Inter",
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
                                 color: Color(0xFFFFFFFF),
                               ),
                             ),
-                            SizedBox(height: 20),
-                            Text(
+                            const SizedBox(height: 20),
+                            const Text(
                               "Опыт работы",
                               style: TextStyle(
                                 fontFamily: "Inter",
@@ -264,18 +208,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: Color(0xFF71747B),
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Text(
-                              "Опыта работы нет",
-                              style: TextStyle(
+                              currentResume?.work_xp ?? " ",
+                              style: const TextStyle(
                                 fontFamily: "Inter",
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
                                 color: Color(0xFFFFFFFF),
                               ),
                             ),
-                            SizedBox(height: 20),
-                            Text(
+                            const SizedBox(height: 20),
+                            const Text(
                               "Навыки",
                               style: TextStyle(
                                 fontFamily: "Inter",
@@ -284,15 +228,19 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: Color(0xFF71747B),
                               ),
                             ),
-                            SizedBox(height: 10),
-                            Text(
-                              "Опыта работы нет",
-                              style: TextStyle(
-                                fontFamily: "Inter",
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFFFFFFFF),
-                              ),
+                            const SizedBox(height: 10),
+                            ///сделать показ самих навыков и создать список из навыков из бд
+                            Wrap(
+                              spacing: 5,
+                              runSpacing: 5,
+                              children: [
+                                Skills(skill: 'Cocat'),
+                                Skills(skill: 'Cocat'),
+                                Skills(skill: 'Cocat'),
+                                Skills(skill: 'Cocat'),
+                                Skills(skill: 'Cocat'),
+                                Skills(skill: 'Cocat'),
+                              ],
                             ),
                           ],
                         ),
@@ -343,7 +291,9 @@ class _ProfilePageState extends State<ProfilePage> {
             if (index == 2) {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const ViewHistoryPage()),
+                MaterialPageRoute(
+                  builder: (context) => const ViewHistoryPage(),
+                ),
               );
             }
           },

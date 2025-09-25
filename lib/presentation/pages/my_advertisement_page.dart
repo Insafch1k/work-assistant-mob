@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:work_assistent/presentation/pages/employer_work_page.dart';
-import 'package:work_assistent/presentation/pages/new_advertisement_page.dart';
-import 'package:work_assistent/presentation/widgets/employer_advertisement.dart';
-import 'package:work_assistent/presentation/widgets/employer_bottom_buttons.dart';
+import 'package:provider/provider.dart';
+import 'package:work_assistent_mob/presentation/pages/employer_profile_page.dart';
+import 'package:work_assistent_mob/presentation/pages/employer_work_page.dart';
+import 'package:work_assistent_mob/presentation/pages/new_advertisement_page.dart';
+import 'package:work_assistent_mob/presentation/providers/advertisement_provider.dart';
+import 'package:work_assistent_mob/presentation/widgets/employer_advertisement.dart';
+import 'package:work_assistent_mob/presentation/widgets/employer_bottom_buttons.dart';
 
-class MyAdvertisementPage extends StatelessWidget {
+class MyAdvertisementPage extends StatefulWidget {
   const MyAdvertisementPage({super.key});
 
   @override
+  State<MyAdvertisementPage> createState() => _MyAdvertisementPageState();
+}
+
+class _MyAdvertisementPageState extends State<MyAdvertisementPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AdvertisementProvider>().fetchEmployersAdvertisements();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final provider = context.watch<AdvertisementProvider>();
     return Scaffold(
       backgroundColor: Color(0xFF191A1F),
       appBar: AppBar(
@@ -83,26 +100,14 @@ class MyAdvertisementPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20),
-              EmployerAdvertisement(
-                discription:
-                    "Срочно нужно сделать карточки маркетплейсов для вб",
-                cost: "500 р. за штуку",
-                time: "Сегодня",
-                feedback: '4.5',
-                location: "ул.Ямашева 12",
-                hasNumber: true,
-              ),
-              SizedBox(height: 20),
-              EmployerAdvertisement(
-                discription:
-                    "Нужна крутая презентация для товара на вб! Быстро!",
-                cost: "5000",
-                time: "4 часа",
-                feedback: '5',
-                location: "ул.Чуйкова 35",
-                hasNumber: true,
-              ),
-              SizedBox(height: 20),
+              ...provider.employerAdvertisement
+                  .map(
+                    (ad) => Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: EmployerAdvertisement(ad: ad),
+                    ),
+                  )
+                  .toList(),
             ],
           ),
         ),
@@ -119,7 +124,10 @@ class MyAdvertisementPage extends StatelessWidget {
               );
             }
             if (index == 2) {
-              // переход на юзера(работорадетль)
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => EmployerProfilePage()),
+              );
             }
           },
         ),

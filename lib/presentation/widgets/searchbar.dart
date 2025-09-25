@@ -17,7 +17,6 @@ class MySearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 40,
-      width: 320,
       child: TextField(
         controller: controller,
         onChanged: onChanged,

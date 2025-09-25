@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:work_assistent/presentation/pages/favorite_page.dart';
-import 'package:work_assistent/presentation/pages/profile_page.dart';
-import 'package:work_assistent/presentation/pages/view_history_page.dart';
-import 'package:work_assistent/presentation/pages/work_page.dart';
-import 'package:work_assistent/presentation/widgets/bottom_buttons.dart';
-import 'package:work_assistent/presentation/widgets/input_field.dart';
-import 'package:work_assistent/presentation/widgets/text_field.dart';
+import 'package:work_assistent_mob/presentation/pages/favorite_page.dart';
+import 'package:work_assistent_mob/presentation/pages/profile_page.dart';
+import 'package:work_assistent_mob/presentation/pages/view_history_page.dart';
+import 'package:work_assistent_mob/presentation/pages/work_page.dart';
+import 'package:work_assistent_mob/presentation/widgets/address_field.dart';
+import 'package:work_assistent_mob/presentation/widgets/bottom_buttons.dart';
+import 'package:work_assistent_mob/presentation/widgets/input_field.dart';
+import 'package:work_assistent_mob/presentation/widgets/text_field.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -18,6 +19,22 @@ class FilterPage extends StatefulWidget {
 class _FilterPageState extends State<FilterPage> {
   bool _isSwitched = false;
   int _selectedIndex = 0;
+  bool _isFormValid = false;
+
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+
+  void _validateForm() {
+    final isAddressValid = _addressController.text.trim().isNotEmpty;
+    final isCityValid = _cityController.text.trim().isNotEmpty;
+
+    setState(() {
+      _isFormValid =
+          isAddressValid &&
+          isCityValid;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,15 +49,13 @@ class _FilterPageState extends State<FilterPage> {
             color: Color(0xFFFFFFFF),
           ),
         ),
-        backgroundColor: const Color(0xFF191A1F), 
+        backgroundColor: const Color(0xFF191A1F),
         centerTitle: true,
-        elevation: 0, 
-        scrolledUnderElevation: 0, 
-        surfaceTintColor: Colors.transparent, 
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
-            color: const Color(0xFF191A1F), 
-          ),
+          decoration: BoxDecoration(color: const Color(0xFF191A1F)),
         ),
       ),
       body: SingleChildScrollView(
@@ -86,7 +101,18 @@ class _FilterPageState extends State<FilterPage> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
                 width: double.infinity,
-                child: InputField(hintText: "Любая"),
+                child: AddressAutocompleteField(
+                  controller: _addressController,
+                  cityController: _cityController, // Передаем контроллер города
+                  hintText: "Введите адрес",
+                  apiKey: "211d8c431dd6807b5f7201155b55a46629d3cf76",
+                  secretKey: "16014d345ad918d0c0dbe7d8ed896232339d4abe",
+                  onAddressSelected: (addressData) {
+                    // addressData содержит {'address': 'ул. Ленина, 10', 'city': 'Казань'}
+                    print('Получены данные адреса: $addressData');
+                    _validateForm();
+                  },
+                ),
               ),
             ),
             SizedBox(height: 10),
@@ -322,7 +348,7 @@ class _FilterPageState extends State<FilterPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => WorkPage()),
+                      MaterialPageRoute(builder: (context) => WorkPage(city: _cityController.text)),
                     );
                   },
                   child: Row(

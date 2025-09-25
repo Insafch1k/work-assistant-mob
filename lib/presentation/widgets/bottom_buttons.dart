@@ -14,7 +14,6 @@ class BottomButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 290,
       height: 60,
       decoration: BoxDecoration(
         color: Colors.transparent,
