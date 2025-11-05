@@ -3,4 +3,5 @@ import 'package:work_assistent_mob/data/models/login_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<AuthResponseModel> register(LoginModel login);
+  Future<AuthResponseModel> login(LoginModel login);
 }

@@ -20,11 +20,12 @@ class AuthRepositoryImpl implements AuthRepository {
       final model = LoginModel.fromEntity(login);
       final response = await remoteDataSource.register(model);
 
-      if (response.token.isEmpty) {
+      // Исправлено: проверка на null вместо isEmpty
+      if (response.token == null || response.token!.isEmpty) {
         throw Exception('Получен пустой токен');
       }
 
-      await localDataSource.saveToken(response.token);
+      await localDataSource.saveToken(response.token!);
       
       // Проверяем сохранение
       final savedToken = await localDataSource.getToken();
@@ -32,7 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
         throw Exception('Токен не сохранился в кэше');
       }
 
-      return AuthToken(response.token);
+      return AuthToken(response.token!);
     } catch (e) {
       print('Ошибка регистрации: $e');
       rethrow;
@@ -45,6 +46,11 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<void> cacheData(String email, String password) async {
+    await localDataSource.saveData(email, password);
+  }
+
+  @override
   Future<AuthToken?> getCachedToken() async {
     final token = await localDataSource.getToken();
     return token != null ? AuthToken(token) : null;
@@ -53,5 +59,30 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> clearToken() async {
     await localDataSource.deleteToken();
+  }
+
+  // Добавлены недостающие методы из AuthRepository
+  @override
+  Future<AuthToken> login(Login login) async {
+    try {
+      final model = LoginModel.fromEntity(login);
+      final response = await remoteDataSource.login(model);
+
+      if (response.token == null || response.token!.isEmpty) {
+        throw Exception('Получен пустой токен');
+      }
+
+      await localDataSource.saveToken(response.token!);
+      return AuthToken(response.token!);
+    } catch (e) {
+      print('Ошибка входа: $e');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> isTokenValid() async {
+    final token = await localDataSource.getToken();
+    return token != null && token.isNotEmpty;
   }
 }

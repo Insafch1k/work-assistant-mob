@@ -4,6 +4,7 @@ import 'package:work_assistent_mob/domain/entities/login.dart';
 abstract class AuthRepository {
   Future<AuthToken> register(Login login);
   Future<void> cacheAuthToken(AuthToken token);
+  Future<void> cacheData(String email, String password);
   Future<AuthToken?> getCachedToken();
   Future<void> clearToken();
 }

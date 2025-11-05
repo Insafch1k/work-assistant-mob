@@ -1,10 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:work_assistent_mob/data/datasources/local/auth_local_data_source_impl.dart';
 import 'package:work_assistent_mob/data/datasources/remote/advertisement_remote_data_source.dart';
 import 'package:work_assistent_mob/data/datasources/remote/auth_remote_data_source_impl.dart';
-import 'package:work_assistent_mob/data/datasources/remote/login_remote_data_source.dart';
+import 'package:work_assistent_mob/data/datasources/remote/login_remote_data_source_impl.dart';
 import 'package:work_assistent_mob/data/datasources/remote/resume_remote_data_source.dart';
 import 'package:work_assistent_mob/data/datasources/remote/view_remote_data_source.dart';
 import 'package:work_assistent_mob/data/repositories/advertisement_repository_impl.dart';
@@ -31,6 +32,9 @@ import 'package:work_assistent_mob/domain/usecases/redo_employer_resume.dart';
 import 'package:work_assistent_mob/domain/usecases/redo_resume.dart';
 import 'package:work_assistent_mob/domain/usecases/reduct_advertisement.dart';
 import 'package:work_assistent_mob/domain/usecases/send_resume.dart';
+import 'package:work_assistent_mob/presentation/experemental/avtorization_page.dart';
+import 'package:work_assistent_mob/presentation/experemental/change_password_page.dart';
+import 'package:work_assistent_mob/presentation/experemental/forgot_password_page.dart';
 import 'package:work_assistent_mob/presentation/pages/chat_page.dart';
 import 'package:work_assistent_mob/presentation/pages/create_resume_page.dart';
 import 'package:work_assistent_mob/presentation/pages/login_page.dart';
@@ -49,44 +53,41 @@ void main() async {
   final storage = FlutterSecureStorage();
   final httpClient = http.Client();
 
+  print('1. HTTP Client created: ${httpClient != null}');
+
   final authLocalDataSource = AuthLocalDataSourceImpl(storage);
 
-  // Login dependencies
+  // Auth dependencies
   final authRemoteDataSource = AuthRemoteDataSourceImpl(client: httpClient);
   final authRepository = AuthRepositoryImpl(
     remoteDataSource: authRemoteDataSource,
     localDataSource: authLocalDataSource,
   );
-
   final authProvider = AuthProvider(repository: authRepository);
 
-  // Login dependencies
   final loginRemoteDataSource = LoginRemoteDataSourceImpl(client: httpClient);
+
   final loginRepository = LoginRepositoryImpl(
     remoteDataSource: loginRemoteDataSource,
     localDataSource: authLocalDataSource,
-    authProvider: authProvider, // Передаем провайдер
   );
 
-  final loginProvider = LoginProvider(repository: loginRepository);
+  final loginProvider = LoginProvider(repository: loginRepository); // Обычный конструктор!
 
   // View dependencies
   final viewRemoteDataSource = ViewRemoteDataSource(
     client: httpClient,
-    authProvider: authProvider,
+    loginProvider: loginProvider,
   );
   final viewRepository = ViewRepositoryImpl(dataSource: viewRemoteDataSource);
-
   final viewProvider = ViewProvider(
     createViewUseCase: CreateView(viewRepository),
   );
 
-  // Auth dependencies
-
   // Advertisement dependencies
   final adsDataSource = AdvertisementRemoteDataSource(
     client: httpClient,
-    authProvider: authProvider,
+    loginProvider: loginProvider,
   );
   final adsRepository = AdvertisementRepositoryImpl(
     remoteDataSource: adsDataSource,
@@ -106,9 +107,10 @@ void main() async {
     deleteAdvertisement: DeleteAdvertisement(repository: adsRepository)
   );
 
+  // Resume dependencies
   final resumeDataSource = ResumeRemoteDataSourceImpl(
     client: httpClient,
-    authProvider: authProvider,
+    loginProvider: loginProvider,
   );
   final resumeRepository = ResumeRepositoryImpl(
     remoteDataSource: resumeDataSource,
@@ -146,7 +148,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Work Assistant',
       debugShowCheckedModeBanner: false,
-      home: const CreateResumePage(),
+      home: LoginPage(),
     );
   }
 }

@@ -2,20 +2,21 @@ import "dart:convert";
 import "package:http/http.dart" as http;
 import "package:work_assistent_mob/data/models/advertisement_model.dart";
 import "package:work_assistent_mob/presentation/providers/auth_provider.dart";
+import "package:work_assistent_mob/presentation/providers/login_provider.dart";
 
 class AdvertisementRemoteDataSource {
   final http.Client client;
-  final AuthProvider authProvider;
-  final String baseUrl = 'https://lucky-pillows-swim.loca.lt/api';
+  final LoginProvider loginProvider;
+  final String baseUrl = 'https://shop-stars-tg-bot.cloudpub.ru';
 
   AdvertisementRemoteDataSource({
     required this.client,
-    required this.authProvider,
+    required this.loginProvider,
   });
 
   // Метод для получения заголовков с авторизацией
   Map<String, String> _getAuthHeaders() {
-    final token = authProvider.authToken?.token;
+    final token = loginProvider.authToken;
     print('Используемый токен: $token');
     if (token == null) {
       throw Exception('Пользователь не аутентифицирован.');

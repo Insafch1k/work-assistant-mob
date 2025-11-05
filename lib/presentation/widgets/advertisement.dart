@@ -35,9 +35,7 @@ class _AdvertisementState extends State<Advertisement> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Рассчитываем ширину для кнопок (минус отступы)
         final buttonWidth = (constraints.maxWidth - 20) / 2;
-        // Ширина для текстового контента (минус отступы и иконки)
         final contentWidth = constraints.maxWidth - 60;
 
         return Column(

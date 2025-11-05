@@ -7,7 +7,7 @@ import 'package:work_assistent_mob/data/models/login_model.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final http.Client client;
-  final String baseUrl = 'https://lucky-pillows-swim.loca.lt/api';
+  final String baseUrl = 'https://shop-stars-tg-bot.cloudpub.ru';
 
   AuthRemoteDataSourceImpl({required this.client});
 
@@ -35,6 +35,36 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
     } else {
       throw Exception('Ошибка регистрации: ${response.statusCode}');
+    }
+  }
+
+  @override
+  Future<AuthResponseModel> login(LoginModel login) async {
+    print('Данные для входа: ${login.email}');
+
+    final response = await client.post(
+      Uri.parse('$baseUrl/auth/login_mail'),
+      body: json.encode({
+        'email': login.email,
+        'password': login.password,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
+    
+    print('Статус ответа: ${response.statusCode}');
+    print('Тело ответа: ${response.body}');
+
+    if (response.statusCode == 200) {
+      try {
+        final jsonResponse = json.decode(response.body);
+        print('Ответ : $jsonResponse');
+        return AuthResponseModel.fromJson(jsonResponse);
+      } catch (e) {
+        print('Ошибка парсинга ответа: $e');
+        throw Exception('Ошибка парсинга ответа: $e');
+      }
+    } else {
+      throw Exception('Ошибка входа: ${response.statusCode}');
     }
   }
 }

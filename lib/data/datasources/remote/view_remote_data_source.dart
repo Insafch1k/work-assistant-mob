@@ -1,7 +1,9 @@
 import 'package:work_assistent_mob/data/models/view_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:work_assistent_mob/domain/entities/login.dart';
 import 'dart:convert';
 import 'package:work_assistent_mob/presentation/providers/auth_provider.dart';
+import 'package:work_assistent_mob/presentation/providers/login_provider.dart';
 
 abstract class ViewDataSource {
   Future<ViewModel> createView(int job_id);
@@ -9,16 +11,16 @@ abstract class ViewDataSource {
 
 class ViewRemoteDataSource implements ViewDataSource {
   final http.Client client;
-  final AuthProvider authProvider;
+  final LoginProvider loginProvider;
   final String baseUrl = 'https://lucky-pillows-swim.loca.lt/api';
 
   ViewRemoteDataSource({
     required this.client,
-    required this.authProvider,
+    required this.loginProvider,
   });
 
   Map<String, String> _getAuthHeaders() {
-    final token = authProvider.authToken?.token;
+    final token = loginProvider.authToken;
     if (token == null) {
       throw Exception('Пользователь не аутентифицирован');
     }

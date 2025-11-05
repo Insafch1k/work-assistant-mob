@@ -1,13 +1,12 @@
 import 'package:work_assistent_mob/domain/entities/login.dart';
 import 'package:work_assistent_mob/domain/repositories/login_repository.dart';
 
-
-class Authenticate {
+class RegisterMail {
   final LoginRepository repository;
 
-  Authenticate(this.repository);
+  RegisterMail(this.repository);
 
-  Future<String> call(Login login) async {
-    return await repository.authenticate(login);
+  Future<int> call(Login login) async {
+    return await repository.registerMail(login);
   }
 }

@@ -1,34 +1,59 @@
 import 'package:work_assistent_mob/domain/entities/login.dart';
 
 class LoginModel {
-  final String tg;
-  final String tg_username;
-  final String user_role;
   final String user_name;
+  final String email;
+  final String password;
+  final String user_role;
 
   LoginModel({
-    required this.tg,
-    required this.tg_username,
-    required this.user_role,
     required this.user_name,
+    required this.email,
+    required this.password,
+    required this.user_role,
   });
 
   factory LoginModel.fromEntity(Login entity) {
     return LoginModel(
-      tg: entity.tg,
-      tg_username: entity.tg_username,
-      user_role: entity.user_role,
       user_name: entity.user_name,
+      email: entity.email,
+      password: entity.password,
+      user_role: entity.user_role,
+    );
+  }
+
+  Login toEntity() {
+    return Login(
+      user_name: user_name,
+      email: email,
+      password: password,
+      user_role: user_role,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'tg' : tg,
-      'tg_username': tg_username,
-      'user_role': user_role,
       'user_name': user_name,
+      'email': email,
+      'password': password,
+      'user_role': user_role,
     };
   }
 
+  // Для смены пароля
+  Map<String, dynamic> toChangePasswordJson() {
+    return {
+      'old_password': password, // здесь password будет старым паролем
+      'new_password': user_name, // здесь user_name будет новым паролем
+    };
+  }
+
+  // Для восстановления пароля
+  Map<String, dynamic> toRecoveryJson({required int code, required int temporaryId}) {
+    return {
+      'temporary_id': temporaryId,
+      'code': code,
+      'password': password,
+    };
+  }
 }
