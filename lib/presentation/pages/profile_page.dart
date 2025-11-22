@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:work_assistent_mob/presentation/experemental/change_password_page.dart';
 import 'package:work_assistent_mob/presentation/pages/create_resume_page.dart';
 import 'package:work_assistent_mob/presentation/pages/favorite_page.dart';
 import 'package:work_assistent_mob/presentation/pages/recreate_resume_page.dart';
@@ -105,7 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => CreateResumePage(),
+                          builder: (context) => ChangePasswordPage(), // ChangePasswordPage() должно быть вместо смены пароля
                         ),
                       );
                     },

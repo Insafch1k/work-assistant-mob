@@ -31,6 +31,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     _nameController.dispose();
     _emailController.dispose();
     _oldPasswordController.dispose();
+    _newPasswordController.dispose();
     super.dispose();
   }
 

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -114,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await loginProvider.register(
         Login(
-          user_name: _nameController.text,
+          username: _nameController.text,
           email: _emailController.text,
           password: _passwordController.text,
           user_role: selectedRole!,
@@ -122,20 +124,6 @@ class _LoginPageState extends State<LoginPage> {
       );
       _showEmailConfirmationDialog(_codeController);
     } catch (e) {}
-
-    //   // if (selectedRole == 'employer') {
-    //   //   Navigator.pushReplacement(
-    //   //     context,
-    //   //     MaterialPageRoute(builder: (_) => EmployerWorkPage()),
-    //   //   );
-    //   // }
-
-    //   // if (selectedRole == 'finder') {
-    //   //   Navigator.pushReplacement(
-    //   //     context,
-    //   //     MaterialPageRoute(builder: (_) => WorkPage()),
-    //   //   );
-    //   // }
   }
 
   Future<void> _completeRegistration() async {
@@ -157,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (e) {
       print("Ошибка в подтверждении почты $e");
-      if(e.toString().contains("Неверный код")){
+      if (e.toString().contains("Неверный код")) {
         _showSnackBar("Неверный код");
       }
     }
@@ -270,301 +258,312 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF191A1F),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 40),
-              Center(
-                child: Container(
-                  height: 180,
-                  width: MediaQuery.of(context).size.width,
-                  child: Image.asset(
-                    selected == "Выберите роль"
-                        ? 'assets/images/together.png'
-                        : selected == "Я работодатель"
-                        ? 'assets/images/employer.png'
-                        : 'assets/images/seeker.png',
-                    fit: BoxFit.contain,
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          Image.asset(
+          'assets/images/background.png',
+          fit: BoxFit.cover,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+        ),
+          // Основной контент
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 40),
+                  Center(
+                    child: Container(
+                      height: 180,
+                      width: MediaQuery.of(context).size.width,
+                      child: Image.asset(
+                        selected == "Выберите роль"
+                            ? 'assets/images/together.png'
+                            : selected == "Я работодатель"
+                            ? 'assets/images/employer.png'
+                            : 'assets/images/seeker.png',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(height: 30),
-              Center(
-                child: Text(
-                  'Регистрация',
-                  style: TextStyle(
-                    fontFamily: "Inter",
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
+                  SizedBox(height: 30),
+                  Center(
+                    child: Text(
+                      'Регистрация',
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                ),
-              ),
 
-              ///name
-              Padding(
-                padding: EdgeInsets.only(top: 15, left: 20),
-                child: Text(
-                  "Имя",
-                  style: TextStyle(
-                    fontFamily: "Inter",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFFFFFFFF),
-                  ),
-                ),
-              ),
-              SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0),
-                child: Container(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF35383F),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: TextField(
-                    controller: _nameController,
-                    style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w300,
-                      fontSize: 16.0,
-                      height: 1.0,
-                      letterSpacing: 0.0,
-                      color: Color(0xFFFFFFFF),
-                    ),
-                    decoration: InputDecoration(
-                      hintText: 'Ваше имя',
-                      hintStyle: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w300,
-                        fontSize: 16.0,
-                        height: 1.0,
-                        color: Color(0xFF71747B),
-                        letterSpacing: 0.0,
-                      ),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.only(
-                        top: 20,
-                        bottom: 10.0,
-                        left: 25.0,
-                        right: 20.0,
+                  ///name
+                  Padding(
+                    padding: EdgeInsets.only(top: 15, left: 20),
+                    child: Text(
+                      "Имя",
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFFFFFFFF),
                       ),
                     ),
                   ),
-                ),
-              ),
-
-              ///email
-              Padding(
-                padding: EdgeInsets.only(top: 10, left: 20),
-                child: Text(
-                  "Почта",
-                  style: TextStyle(
-                    fontFamily: "Inter",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFFFFFFFF),
-                  ),
-                ),
-              ),
-              SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0),
-                child: Container(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF35383F),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: TextField(
-                    controller: _emailController,
-                    style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w300,
-                      fontSize: 16.0,
-                      height: 1.0,
-                      letterSpacing: 0.0,
-                      color: Color(0xFFFFFFFF),
-                    ),
-                    decoration: InputDecoration(
-                      hintText: 'Ваша почта',
-                      hintStyle: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w300,
-                        fontSize: 16.0,
-                        height: 1.0,
-                        color: Color(0xFF71747B),
-                        letterSpacing: 0.0,
-                      ),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.only(
-                        top: 20,
-                        bottom: 10.0,
-                        left: 25.0,
-                        right: 20.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
-              ///password
-              Padding(
-                padding: EdgeInsets.only(top: 10, left: 20),
-                child: Text(
-                  "Пароль",
-                  style: TextStyle(
-                    fontFamily: "Inter",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFFFFFFFF),
-                  ),
-                ),
-              ),
-              SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0),
-                child: Container(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF35383F),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: TextField(
-                    controller: _passwordController,
-                    style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w300,
-                      fontSize: 16.0,
-                      height: 1.0,
-                      letterSpacing: 0.0,
-                      color: Color(0xFFFFFFFF),
-                    ),
-                    decoration: InputDecoration(
-                      hintText: 'Введите пароль',
-                      hintStyle: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w300,
-                        fontSize: 16.0,
-                        height: 1.0,
-                        color: Color(0xFF71747B),
-                        letterSpacing: 0.0,
-                      ),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.only(
-                        top: 20,
-                        bottom: 10.0,
-                        left: 25.0,
-                        right: 20.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
-              ///role in service
-              Padding(
-                padding: EdgeInsets.only(top: 10, left: 20),
-                child: Text(
-                  "Роль в сервисе",
-                  style: TextStyle(
-                    fontFamily: "Inter",
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFFFFFFFF),
-                  ),
-                ),
-              ),
-              SizedBox(height: 5),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 60,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF35383F),
-                      shape: RoundedRectangleBorder(
+                  SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Container(
+                      height: 60,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF35383F),
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      padding: const EdgeInsets.only(
-                        left: 25,
-                        right: 20,
-                        top: 11,
-                        bottom: 10,
-                      ),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        showChoice = !showChoice;
-                      });
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          selected,
-                          style: TextStyle(
-                            fontFamily: "Inter",
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xFFFFFFFF),
+                      child: TextField(
+                        controller: _nameController,
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w300,
+                          fontSize: 16.0,
+                          height: 1.0,
+                          letterSpacing: 0.0,
+                          color: Color(0xFFFFFFFF),
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Ваше имя',
+                          hintStyle: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w300,
+                            fontSize: 16.0,
+                            height: 1.0,
+                            color: Color(0xFF71747B),
+                            letterSpacing: 0.0,
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.only(
+                            top: 20,
+                            bottom: 10.0,
+                            left: 25.0,
+                            right: 20.0,
                           ),
                         ),
-                        SvgPicture.asset(
-                          showChoice
-                              ? 'assets/icons/up.svg'
-                              : 'assets/icons/down.svg',
-                          width: 20,
-                          height: 20,
-                          color: const Color(0xFFFFFFFF),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-              showChoice
-                  ? Column(
-                    children: [
-                      const SizedBox(height: 5),
-                      SizedBox(
-                        height: 100,
-                        width: MediaQuery.of(context).size.width,
-                        child: ChoiceButtons(
-                          selected: selected,
-                          onSelected: handleSelection,
-                          showChoice: showChoice,
-                          onShowChoice: handleShowChoice,
+
+                  ///email
+                  Padding(
+                    padding: EdgeInsets.only(top: 10, left: 20),
+                    child: Text(
+                      "Почта",
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFFFFFFFF),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Container(
+                      height: 60,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF35383F),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: TextField(
+                        controller: _emailController,
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w300,
+                          fontSize: 16.0,
+                          height: 1.0,
+                          letterSpacing: 0.0,
+                          color: Color(0xFFFFFFFF),
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Ваша почта',
+                          hintStyle: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w300,
+                            fontSize: 16.0,
+                            height: 1.0,
+                            color: Color(0xFF71747B),
+                            letterSpacing: 0.0,
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.only(
+                            top: 20,
+                            bottom: 10.0,
+                            left: 25.0,
+                            right: 20.0,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 15),
-                      AuthorizationButton(
-                        visible: true,
-                        onPressed: _handleLogin,
-                      ),
-                    ],
-                  )
-                  : Column(
-                    children: [
-                      const SizedBox(height: 15),
-                      AuthorizationButton(
-                        visible: true,
-                        onPressed: _handleLogin,
-                      ),
-                    ],
+                    ),
                   ),
-            ],
+
+                  ///password
+                  Padding(
+                    padding: EdgeInsets.only(top: 10, left: 20),
+                    child: Text(
+                      "Пароль",
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFFFFFFFF),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Container(
+                      height: 60,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF35383F),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: TextField(
+                        controller: _passwordController,
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w300,
+                          fontSize: 16.0,
+                          height: 1.0,
+                          letterSpacing: 0.0,
+                          color: Color(0xFFFFFFFF),
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Введите пароль',
+                          hintStyle: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w300,
+                            fontSize: 16.0,
+                            height: 1.0,
+                            color: Color(0xFF71747B),
+                            letterSpacing: 0.0,
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.only(
+                            top: 20,
+                            bottom: 10.0,
+                            left: 25.0,
+                            right: 20.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  ///role in service
+                  Padding(
+                    padding: EdgeInsets.only(top: 10, left: 20),
+                    child: Text(
+                      "Роль в сервисе",
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFFFFFFFF),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 60,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF35383F),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          padding: const EdgeInsets.only(
+                            left: 25,
+                            right: 20,
+                            top: 11,
+                            bottom: 10,
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            showChoice = !showChoice;
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              selected,
+                              style: TextStyle(
+                                fontFamily: "Inter",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFFFFFFFF),
+                              ),
+                            ),
+                            SvgPicture.asset(
+                              showChoice
+                                  ? 'assets/icons/up.svg'
+                                  : 'assets/icons/down.svg',
+                              width: 20,
+                              height: 20,
+                              color: const Color(0xFFFFFFFF),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  showChoice
+                      ? Column(
+                        children: [
+                          const SizedBox(height: 5),
+                          SizedBox(
+                            height: 100,
+                            width: MediaQuery.of(context).size.width,
+                            child: ChoiceButtons(
+                              selected: selected,
+                              onSelected: handleSelection,
+                              showChoice: showChoice,
+                              onShowChoice: handleShowChoice,
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          AuthorizationButton(
+                            visible: true,
+                            onPressed: _handleLogin,
+                          ),
+                        ],
+                      )
+                      : Column(
+                        children: [
+                          const SizedBox(height: 15),
+                          AuthorizationButton(
+                            visible: true,
+                            onPressed: _handleLogin,
+                          ),
+                        ],
+                      ),
+                ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -7,7 +7,7 @@ import "package:work_assistent_mob/presentation/providers/login_provider.dart";
 class AdvertisementRemoteDataSource {
   final http.Client client;
   final LoginProvider loginProvider;
-  final String baseUrl = 'https://shop-stars-tg-bot.cloudpub.ru';
+  final String baseUrl = "http://10.0.2.2:5000/api";
 
   AdvertisementRemoteDataSource({
     required this.client,

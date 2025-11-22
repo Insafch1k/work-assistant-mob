@@ -77,28 +77,30 @@ class LoginProvider with ChangeNotifier {
   }
 
   // Авторизация пользователя
-  Future<void> login({required String email, required String password}) async {
-    try {
-      _clearError();
-      _isLoading = true;
-      notifyListeners();
+  Future<Map<String, dynamic>> login({required String email, required String password}) async {
+  try {
+    _clearError();
+    _isLoading = true;
+    notifyListeners();
 
-      final result = await repository.loginMail(
-        email: email,
-        password: password,
-      );
+    final result = await repository.loginMail(
+      email: email,
+      password: password,
+    );
 
-      _authToken = result['token'] as String;
-      _userRole = result['role'] as String?;
-      _isLoading = false;
-      notifyListeners();
-    } catch (e) {
-      _isLoading = false;
-      _setError('Ошибка авторизации: $e');
-      print('Ошибка в login: $e');
-      rethrow;
-    }
+    _authToken = result['token'] as String;
+    _userRole = result['role'] as String?;
+    _isLoading = false;
+    notifyListeners();
+
+    return result; // ← ДОБАВЬТЕ ЭТУ СТРОКУ
+  } catch (e) {
+    _isLoading = false;
+    _setError('Ошибка авторизации: $e');
+    print('Ошибка в login: $e');
+    rethrow;
   }
+}
 
   // Восстановление пароля - запрос кода
   Future<void> forgotPassword({required String email}) async {

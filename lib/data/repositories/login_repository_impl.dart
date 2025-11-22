@@ -71,10 +71,12 @@ class LoginRepositoryImpl implements LoginRepository {
         throw Exception('Не получен токен');
       }
 
+      final serverRole = response.resolvedRole;
+
       await cacheAuthToken(response.token!);
       await cacheData(email, password);
-      print("Полученная роль: ${response.role}");
-      return {'token': response.token!, 'role': response.role};
+      print("Полученная роль: ${serverRole}");
+      return {'token': response.token!, 'role': serverRole};
     } catch (e) {
       print('Ошибка авторизации: $e');
       rethrow;

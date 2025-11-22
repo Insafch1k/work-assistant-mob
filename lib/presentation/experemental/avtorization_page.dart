@@ -34,10 +34,6 @@ class _AvtorizationPageState extends State<AvtorizationPage> {
   }
 
   bool _validateFields() {
-    if (_nameController.text.isEmpty) {
-      _showSnackBar("Заполните все поля");
-      return false;
-    }
     if (_emailController.text.isEmpty) {
       _showSnackBar("Заполните все поля");
       return false;
@@ -54,10 +50,7 @@ class _AvtorizationPageState extends State<AvtorizationPage> {
       _showSnackBar("Пароль должен содержать не менее 8 символов");
       return false;
     }
-    if (selectedRole == null) {
-      _showSnackBar("Заполните все поля");
-      return false;
-    }
+
     return true;
   }
 
@@ -112,25 +105,27 @@ class _AvtorizationPageState extends State<AvtorizationPage> {
 
     final loginProvider = Provider.of<LoginProvider>(context, listen: false);
     try {
-      await loginProvider.login(
-          email: _emailController.text,
-          password: _passwordController.text,
+      final Map<String, dynamic> result = await loginProvider.login(
+        email: _emailController.text,
+        password: _passwordController.text,
       );
 
-      if (selectedRole == 'employer') {
+      final serverRole = result['role'] as String;
+      print("🎯 Роль с сервера для навигации: $serverRole");
+
+      if (serverRole == 'employer') {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => EmployerWorkPage()),
         );
       }
 
-      if (selectedRole == 'finder') {
+      if (serverRole == 'finder') {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => WorkPage()),
         );
       }
-      
     } catch (e) {
       print("Ошибка в авторизации $e");
       _showSnackBar("Неправльные данные");
@@ -156,7 +151,7 @@ class _AvtorizationPageState extends State<AvtorizationPage> {
       }
     } catch (e) {
       print("Ошибка в подтверждении почты $e");
-      if(e.toString().contains("Неверный код")){
+      if (e.toString().contains("Неверный код")) {
         _showSnackBar("Неверный код");
       }
     }

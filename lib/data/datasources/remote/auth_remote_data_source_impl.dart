@@ -7,7 +7,7 @@ import 'package:work_assistent_mob/data/models/login_model.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final http.Client client;
-  final String baseUrl = 'https://shop-stars-tg-bot.cloudpub.ru';
+  final String baseUrl = "http://10.0.2.2:5000/api";
 
   AuthRemoteDataSourceImpl({required this.client});
 

@@ -16,7 +16,7 @@ abstract class ResumeRemoteDataSource {
 class ResumeRemoteDataSourceImpl implements ResumeRemoteDataSource {
   final http.Client client;
   final LoginProvider loginProvider;
-  final String baseUrl = 'https://lucky-pillows-swim.loca.lt/api';
+  final String baseUrl = "http://10.0.2.2:5000/api";
 
   ResumeRemoteDataSourceImpl({
     required this.client,

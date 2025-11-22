@@ -21,12 +21,14 @@ class AuthResponseModel {
     return AuthResponseModel(
       token: json['token'] ?? json['access_token'],
       message: json['message'],
-      role: json['role'],
+      role: json['role']?.toString(),
       temporaryId: json['temporary_id'],
       userName: json['user_name'],
       email: json['email'],
     );
   }
+
+  String? get resolvedRole => role;
 
   Map<String, dynamic> toJson() {
     return {

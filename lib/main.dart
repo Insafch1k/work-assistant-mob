@@ -65,7 +65,7 @@ void main() async {
   );
   final authProvider = AuthProvider(repository: authRepository);
 
-  final loginRemoteDataSource = LoginRemoteDataSourceImpl(client: httpClient);
+  final loginRemoteDataSource = LoginRemoteDataSourceImpl(client: httpClient, localDataSource: authLocalDataSource);
 
   final loginRepository = LoginRepositoryImpl(
     remoteDataSource: loginRemoteDataSource,

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:work_assistent_mob/data/datasources/remote/address_remote_data_source.dart';
 
 class AddressRemoteDataSourceImpl implements AddressRemoteDataSource {
-  static const String _baseUrl = 'https://suggestions.dadata.ru/suggestions/api/4_1/rs';
+  static const String _baseUrl = "http://10.0.2.2:5000/api";
   final String _apiKey;
   final String _secretKey;
 
